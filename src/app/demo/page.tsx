@@ -172,7 +172,7 @@ export default function DemoPage() {
               <textarea
                 value={input}
                 onChange={e => setInput(e.target.value)}
-                placeholder="写点什么… 用 #标签 来分类，⌘+Enter 快速保存"
+                placeholder="写点什么… 用 #标签 来分类"
                 rows={2}
                 style={{
                   width: '100%', background: 'transparent', border: 'none',

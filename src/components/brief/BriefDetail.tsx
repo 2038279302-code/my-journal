@@ -532,9 +532,6 @@ export default function BriefDetail({ brief }: Props) {
                 alignItems: 'center',
                 marginTop: '14px',
               }}>
-                <span style={{ fontSize: '11px', color: 'var(--ink-muted)' }}>
-                  ⌘↵ 快速保存 · Esc 关闭
-                </span>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button
                     onClick={() => setInsightSource(null)}
@@ -779,9 +776,6 @@ function DailyReviewSection({
             alignItems: 'center',
             marginTop: '12px',
           }}>
-            <span style={{ fontSize: '11px', color: 'var(--ink-muted)' }}>
-              ⌘↵ 保存{review ? ' · Esc 取消' : ''}
-            </span>
             <div style={{ display: 'flex', gap: '8px' }}>
               {review && reviewEditing && (
                 <button

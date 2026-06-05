@@ -149,10 +149,6 @@ export default function NoteEditor({ initialContent = '', onSave, onClose }: Pro
               {wordCount} 字
             </span>
 
-            {/* 快捷键提示（移动端隐藏） */}
-            <span className="hide-mobile" style={{ fontSize: '11px', color: 'var(--ink-light)' }}>
-              ⌘S 保存 · Esc 关闭
-            </span>
 
             <button onClick={onClose} style={{
               background: 'none',

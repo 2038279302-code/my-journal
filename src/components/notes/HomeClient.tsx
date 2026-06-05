@@ -204,7 +204,7 @@ export default function HomeClient({ initialNotes, initialHeatmap, initialTags }
           onKeyDown={e => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleSubmit()
           }}
-          placeholder="写点什么… 用 #标签 来分类，⌘+Enter 快速保存"
+          placeholder="写点什么… 用 #标签 来分类"
           className="journal-input"
           rows={2}
           style={{
