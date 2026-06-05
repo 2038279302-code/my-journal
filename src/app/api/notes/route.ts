@@ -53,6 +53,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const type = searchParams.get('type')
   const tag = searchParams.get('tag')
+  const contentContains = searchParams.get('content_contains') // 内容包含指定字符串（用于精确查找）
   const limit = parseInt(searchParams.get('limit') || '50')
   const offset = parseInt(searchParams.get('offset') || '0')
 
@@ -65,6 +66,7 @@ export async function GET(request: NextRequest) {
 
   if (type) query = query.eq('type', type)
   if (tag) query = query.contains('tags', [tag])
+  if (contentContains) query = query.ilike('content', `%${contentContains}%`)
 
   const { data, error } = await query
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

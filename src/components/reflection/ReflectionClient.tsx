@@ -269,6 +269,27 @@ export default function ReflectionClient({ reflections: initialReflections, tota
                   </div>
                 </div>
 
+                {/* 日报来源标签（如果是从日报写的回顾） */}
+                {/\[brief:\d{4}-\d{2}-\d{2}\]/.test(note.content) && (() => {
+                  const match = note.content.match(/\[brief:(\d{4}-\d{2}-\d{2})\]/)
+                  return match ? (
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      background: '#fff3eb',
+                      border: '1px solid #f9c9be',
+                      borderRadius: '6px',
+                      padding: '2px 8px',
+                      fontSize: '11px',
+                      color: 'var(--accent-coral)',
+                      marginBottom: '8px',
+                    }}>
+                      📰 {match[1]} 日报回顾
+                    </div>
+                  ) : null
+                })()}
+
                 <div
                   style={{
                     fontSize: '14px',
@@ -285,9 +306,9 @@ export default function ReflectionClient({ reflections: initialReflections, tota
                   onClick={() => router.push(`/notes/${note.id}`)}
                   title="点击查看全文"
                 >
-                  {note.content}
+                  {note.content.replace(/\[brief:[^\]]+\]\n?/, '')}
                 </div>
-                {note.content.length > 200 && (
+                {note.content.replace(/\[brief:[^\]]+\]\n?/, '').length > 200 && (
                   <button
                     onClick={() => router.push(`/notes/${note.id}`)}
                     style={{

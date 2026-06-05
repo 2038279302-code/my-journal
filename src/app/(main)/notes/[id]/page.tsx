@@ -84,10 +84,16 @@ export default function NoteDetailPage() {
     setShowEditor(false)
   }
 
+  // 去除 brief marker 后的纯展示内容
+  const displayContent = note ? note.content.replace(/\[brief:[^\]]+\]\n?/, '') : ''
+
   // 是否含有 Markdown 语法（简单判断）
   const hasMarkdown = note
-    ? /^#{1,6}\s|^\*\*|^\-\s|\[.*\]\(|```/.test(note.content)
+    ? /^#{1,6}\s|^\*\*|^\-\s|\[.*\]\(|```/.test(displayContent)
     : false
+
+  // 日报来源信息（如果是日报回顾）
+  const briefDateMatch = note?.content.match(/\[brief:(\d{4}-\d{2}-\d{2})\]/)
 
   return (
     <div className="page-container" style={{ maxWidth: '720px', margin: '0 auto', padding: '32px 24px' }}>
@@ -206,6 +212,24 @@ export default function NoteDetailPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
+          {/* 日报来源标签 */}
+          {briefDateMatch && (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: '#fff3eb',
+              border: '1px solid #f9c9be',
+              borderRadius: '8px',
+              padding: '5px 12px',
+              fontSize: '12px',
+              color: 'var(--accent-coral)',
+              marginBottom: '14px',
+            }}>
+              📰 来自 {briefDateMatch[1]} 日报的今日回顾
+            </div>
+          )}
+
           {/* 元信息栏 */}
           <div style={{
             display: 'flex',
@@ -270,7 +294,7 @@ export default function NoteDetailPage() {
             {hasMarkdown ? (
               <div data-color-mode="light" style={{ fontFamily: 'var(--font-serif)' }}>
                 <MDPreview
-                  source={note.content}
+                  source={displayContent}
                   style={{
                     background: 'transparent',
                     fontSize: '15px',
@@ -290,7 +314,7 @@ export default function NoteDetailPage() {
                 wordBreak: 'break-word',
                 margin: 0,
               }}>
-                {note.content}
+                {displayContent}
               </p>
             )}
           </div>
@@ -312,7 +336,7 @@ export default function NoteDetailPage() {
 
           {/* 字数统计 */}
           <div style={{ fontSize: '12px', color: 'var(--ink-light)', textAlign: 'right', marginTop: '8px' }}>
-            共 {note.content.replace(/\s/g, '').length} 字
+            共 {displayContent.replace(/\s/g, '').length} 字
           </div>
         </motion.div>
       )}
