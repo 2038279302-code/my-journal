@@ -1,0 +1,438 @@
+/* ============================================
+   Google Fonts - 手账风字体（必须在最前面）
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500;600&family=ZCOOL+XiaoWei&display=swap');
+
+@import "tailwindcss";
+
+/* ============================================
+   CSS 变量 - 手账暖色系
+   ============================================ */
+:root {
+  /* 纸张色 */
+  --paper-bg: #fdf8f0;
+  --paper-warm: #f9f0e1;
+  --paper-cream: #f5ebe0;
+  --paper-card: #fffcf5;
+
+  /* 墨水色 */
+  --ink-dark: #2d2418;
+  --ink-main: #4a3728;
+  --ink-muted: #8b7355;
+  --ink-light: #c4a882;
+  --ink-faint: #e8ddd0;
+
+  /* 强调色（手账贴纸风） */
+  --accent-coral: #e8907a;
+  --accent-sage: #8fb89a;
+  --accent-sky: #89a8c4;
+  --accent-lavender: #b09ec9;
+  --accent-golden: #d4a843;
+  --accent-rose: #d4859a;
+
+  /* 功能色 */
+  --border-soft: rgba(74, 55, 40, 0.12);
+  --border-medium: rgba(74, 55, 40, 0.2);
+  --shadow-warm: 0 2px 12px rgba(74, 55, 40, 0.08);
+  --shadow-card: 0 4px 24px rgba(74, 55, 40, 0.1);
+
+  /* 字体 */
+  --font-hand: 'Caveat', 'Ma Shan Zheng', cursive;
+  --font-serif: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================
+   基础重置
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--paper-bg);
+  color: var(--ink-main);
+  font-family: var(--font-serif);
+  line-height: 1.8;
+  min-height: 100vh;
+  /* 纸张纹理 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   排版
+   ============================================ */
+h1, h2, h3 {
+  font-family: var(--font-hand);
+  color: var(--ink-dark);
+  font-weight: 600;
+}
+
+/* ============================================
+   自定义滚动条
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper-warm);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-light);
+  border-radius: 3px;
+}
+
+/* ============================================
+   手账卡片风格
+   ============================================ */
+.journal-card {
+  background: var(--paper-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  box-shadow: var(--shadow-warm);
+  position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.journal-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-1px);
+}
+
+/* 卡片顶部彩色胶带效果 */
+.journal-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 20px;
+  width: 60px;
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+  opacity: 0.7;
+}
+
+.journal-card.tape-coral::before { background: var(--accent-coral); }
+.journal-card.tape-sage::before { background: var(--accent-sage); }
+.journal-card.tape-sky::before { background: var(--accent-sky); }
+.journal-card.tape-lavender::before { background: var(--accent-lavender); }
+.journal-card.tape-golden::before { background: var(--accent-golden); }
+
+/* ============================================
+   标签样式
+   ============================================ */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.tag-pill:hover { opacity: 1; }
+
+/* ============================================
+   输入框手账风格
+   ============================================ */
+.journal-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--border-medium);
+  border-radius: 0;
+  padding: 8px 4px;
+  font-family: var(--font-serif);
+  color: var(--ink-main);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.journal-input:focus {
+  border-bottom-color: var(--accent-coral);
+}
+.journal-input::placeholder {
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* ============================================
+   手账风按钮
+   ============================================ */
+.btn-journal {
+  font-family: var(--font-serif);
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-medium);
+  background: var(--paper-card);
+  color: var(--ink-main);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.btn-journal:hover {
+  background: var(--paper-cream);
+  border-color: var(--accent-coral);
+  color: var(--accent-coral);
+}
+.btn-journal.primary {
+  background: var(--accent-coral);
+  border-color: var(--accent-coral);
+  color: white;
+}
+.btn-journal.primary:hover {
+  background: #d4796a;
+  border-color: #d4796a;
+  color: white;
+}
+
+/* ============================================
+   分隔线
+   ============================================ */
+.divider-hand {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-medium), transparent);
+  margin: 24px 0;
+}
+
+/* ============================================
+   情绪徽章
+   ============================================ */
+.mood-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: var(--paper-warm);
+  border: 1px solid var(--border-soft);
+}
+
+/* ============================================
+   热力图
+   ============================================ */
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--ink-faint);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.heatmap-cell:hover { transform: scale(1.2); }
+.heatmap-cell[data-level="1"] { background: #f9c9be; }
+.heatmap-cell[data-level="2"] { background: #f4a494; }
+.heatmap-cell[data-level="3"] { background: #e8907a; }
+.heatmap-cell[data-level="4"] { background: #d4624e; }
+
+/* ============================================
+   Markdown 编辑器覆盖样式
+   ============================================ */
+.w-md-editor {
+  background: var(--paper-card) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-warm) !important;
+  color: var(--ink-main) !important;
+  font-family: var(--font-serif) !important;
+}
+.w-md-editor-toolbar {
+  background: var(--paper-warm) !important;
+  border-bottom: 1px solid var(--border-soft) !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.w-md-editor-text-pre > code,
+.w-md-editor-text-input {
+  font-family: var(--font-serif) !important;
+  color: var(--ink-main) !important;
+}
+
+/* ============================================
+   动画
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--paper-warm) 25%, var(--ink-faint) 50%, var(--paper-warm) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* ============================================
+   响应式 / 移动端适配
+   ============================================ */
+
+/* 桌面端：显示左侧边栏，隐藏移动顶栏 */
+@media (min-width: 769px) {
+  .sidebar-desktop {
+    display: flex !important;
+  }
+  .sidebar-mobile-header {
+    display: none !important;
+  }
+  .main-content {
+    margin-left: 220px;
+    padding-top: 0;
+  }
+}
+
+/* 移动端：隐藏桌面侧边栏，显示顶部栏 */
+@media (max-width: 768px) {
+  .sidebar-desktop {
+    display: none !important;
+  }
+  .sidebar-mobile-header {
+    display: flex !important;
+  }
+  .main-content {
+    margin-left: 0 !important;
+    padding-top: 56px;
+  }
+
+  /* 卡片胶带效果在移动端隐藏（避免顶部溢出） */
+  .journal-card::before {
+    display: none;
+  }
+
+  /* 移动端按钮点击区域加大 */
+  .btn-journal {
+    min-height: 40px;
+    padding: 8px 16px;
+  }
+
+  /* 热力图移动端横向滚动 */
+  .heatmap-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  /* 移动端搜索筛选项竖向排列，select 撑满 */
+  .search-filters {
+    flex-direction: column !important;
+  }
+  .search-filters select,
+  .search-filters input[type="date"] {
+    width: 100%;
+  }
+
+  /* 移动端统计卡片 */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Toast 移动端自适应宽度，避免溢出 */
+  .toast-global {
+    max-width: calc(100vw - 32px);
+    white-space: normal !important;
+    text-align: center;
+    left: 16px !important;
+    right: 16px !important;
+    transform: none !important;
+    bottom: 20px;
+  }
+
+  /* 页面内容区防止横向溢出 */
+  .page-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* 首页顶部标题区换行适配 */
+  .home-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  .home-header-date {
+    display: none !important;
+  }
+
+  /* 首页快速输入底部工具栏换行 */
+  .input-toolbar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .input-toolbar-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* 详情页顶部操作栏换行 */
+  .detail-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .detail-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    gap: 8px;
+  }
+
+  /* NoteEditor 工具栏换行 */
+  .editor-toolbar {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .editor-toolbar-right {
+    margin-left: 0 !important;
+  }
+
+  /* AI 日报：移动端隐藏左侧列表，只显示内容区 */
+  .brief-layout {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .brief-sidebar {
+    width: 100% !important;
+    max-height: 260px;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .brief-content {
+    overflow-y: visible !important;
+  }
+
+  /* 移动端隐藏辅助元素 */
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* 超小屏（<360px）统计卡片降为单列 */
+@media (max-width: 359px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
